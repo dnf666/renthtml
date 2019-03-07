@@ -4,7 +4,7 @@ import store from '../store/index'
 import CompanyInfo from '@/components/Company-information'
 import MemberMangement from '@/components/Member-mangement'
 import Editor from '@/components/editorMember'
-import BookManagement from '@/components/BookManagement'
+import CuisineManagement from '@/components/CuisineManagement.vue'
 import ProjectManagement from '@/components/ProjectManagement'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
@@ -12,7 +12,8 @@ import Register from '@/components/Fristregister'
 import Fristregister from '@/components/Fristregister'
 import Secondregister from '@/components/Secondregister'
 import EditorProject from '@/components/editorProject'
-import EditorBook from '@/components/BookEdit'
+import EditorBook from '@/components/CuisineEdit'
+import OrderDinner from '@/components/orderDinner'
 
 Vue.use(Router)
 
@@ -71,8 +72,8 @@ const routes = [
         component: MemberMangement
       },
       {
-        path: '/BookMangement/Editor',
-        name: 'EditorBook',
+        path: '/CuisineMangement/Editor',
+        name: 'EditorCuisine',
         meta: {
           requiresAuth: true
         },
@@ -103,12 +104,20 @@ const routes = [
         component: EditorProject
       },
       {
-        path: '/BookManagement',
-        name: 'BookManagement',
+        path: '/CuisineManagement',
+        name: 'CuisineManagement',
         meta: {
           requiresAuth: true
         },
-        component: BookManagement
+        component: CuisineManagement
+      },
+      {
+        path: '/orderDinner',
+        name: 'OrderDinner',
+        meta: {
+          requiresAuth: false
+        },
+        component: OrderDinner
       },
     ]
   }
@@ -124,21 +133,5 @@ const router = new Router({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(r => r.meta.requiresAuth)) { // 判断该路由是否需要登录权限
-//     console.log(store.getters.isLogin)
-//     if (store.getters.isLogin) { // 通过vuex 如果当前有登录
-//       next()
-//     } else {
-//       console.log('没有登录吖')
-//       next({
-//         path: '/',
-//         query: {redirect: to.fullPath}
-//       })
-//     }
-//   } else {
-//     next()
-//   }
-// })
 
 export default router

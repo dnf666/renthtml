@@ -2,7 +2,7 @@ const getters = {
   isCollapse: state => state.nav.isCollapse,
   isLogin: state => state.login.isLogin,
   companyId:state=> state.companyId.companyId,
-  permission:state=> state.permission.permission
+  adminId:state=> state.adminId.adminId
 }
 
 export default getters

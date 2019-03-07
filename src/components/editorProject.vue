@@ -97,6 +97,10 @@
           projectName: this.projectName,
           projectUrl: this.projectUrl,
           onlineTime: this.onlineTime
+        },{
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
         })
           .then( (response) => {
             console.log(response);

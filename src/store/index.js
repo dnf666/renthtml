@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import nav from './modules/nav'
 import login from './modules/login'
 import companyId from './modules/companyId'
-import permission from './modules/permission'
+import adminId from './modules/adminId'
 import getters from './getters'
 
 Vue.use(Vuex)
@@ -14,7 +14,7 @@ const store = new Vuex.Store({
     nav,
     login,
     companyId,
-    permission
+    adminId
   },
   getters
 })
