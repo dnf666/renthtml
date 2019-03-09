@@ -257,7 +257,7 @@
   }
 </style>
 <script>
-  const PREFIX = 'http://localhost:8082/dinner/';
+  const PREFIX = '/dinner/';
   export default {
     data() {
       return {
@@ -379,7 +379,7 @@
           let book = new Object;
           book.name = index;
           this.$axios.post(PREFIX + '/cuisine/delCuisine.do',book).then((response) => {
-            if (response.data.code == 1) {
+            if (response.data.status == 1) {
               this.$message({
                 type: 'success',
                 message: '删除成功!'

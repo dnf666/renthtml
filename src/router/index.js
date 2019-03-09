@@ -50,6 +50,14 @@ const routes = [
     component: Secondregister
   },
   {
+    path: '/orderDinner',
+    name: 'OrderDinner',
+    meta: {
+      requiresAuth: false
+    },
+    component: OrderDinner
+  },
+  {
     path: '/Home',
     name: 'Home',
     component: Home,
@@ -111,14 +119,7 @@ const routes = [
         },
         component: CuisineManagement
       },
-      {
-        path: '/orderDinner',
-        name: 'OrderDinner',
-        meta: {
-          requiresAuth: false
-        },
-        component: OrderDinner
-      },
+
     ]
   }
 

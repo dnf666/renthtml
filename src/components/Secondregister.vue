@@ -30,19 +30,11 @@ export default {
       that.number = that.number - 1;
       if(that.number <= 0) {
         clearInterval(timer);
-        that.$router.push({ path: '/home' })
+        that.$router.push({ path: '/orderDinner' })
       }
     },1000)
   },
-  //  created() {
-  //   console.log(this.number);
-  //   setTimeout(function() {
-  //     this.number = this.number - 1;
-  //     console.log(this.number);
-  //   },1000)
-  //   console.log(1);
-  //  }
-  
+
 }
 </script>
 

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  const PREFIX = 'http://localhost:8082/dinner'
+  const PREFIX = '/dinner'
   export default {
     name: 'Login',
     data () {
@@ -75,7 +75,7 @@
                 that.$store.commit('setAdminId', response.data.object.id);
                 window.sessionStorage.setItem('isLogin', true)
                 window.sessionStorage.setItem('adminId', response.data.object.id)
-                that.$router.push({path: '/CompanyInfo'})
+                that.$router.push({path: '/MemberMangement'})
               } else {
                 alert(response.data.message)
               }

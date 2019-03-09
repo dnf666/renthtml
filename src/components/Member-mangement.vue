@@ -41,7 +41,7 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
-        >
+      >
         <!-- 成员信息 -->
         <el-table-column
           class="memberInfo"
@@ -272,7 +272,7 @@
   import FileSaver from 'file-saver'
   import XLSX from 'xlsx'
 
-  const PREFIX = 'http://localhost:8082/dinner/'
+  const PREFIX = '/dinner/'
   export default {
     data () {
       return {
@@ -303,7 +303,7 @@
     },
     //获取全部成员信息(success)
     created: function () {
-      let that = this;
+      let that = this
       // 得到当前页面成员列表
       var params = new URLSearchParams()
       params.append('page', this.currentPage)
@@ -311,8 +311,8 @@
       this.$axios.post(PREFIX + '/admin/filter.do?' + params.toString(), {})
         .then((response) => {
           this.tableData = response.data.object.data
-          for (let i = 0 ;i<this.tableData.length;i++){
-            that.tableData[i].birthday =  new Date(that.tableData[i].birthday).toLocaleDateString();
+          for (let i = 0; i < this.tableData.length; i++) {
+            that.tableData[i].birthday = new Date(that.tableData[i].birthday).toLocaleDateString()
           }
           this.memberCount = response.data.object.recordSize
         })
@@ -323,14 +323,17 @@
     methods: {
       // 获取当前页数及当前页面数据
       handleCurrentChange (currentPage) {
+        let that = this;
         this.currentPage = currentPage
         let params = new URLSearchParams()
         params.append('page', this.currentPage)
         params.append('size', this.pagesize)
-        this.$axios.post(PREFIX + '/admin/filter.do?' + params.toString(), {
-        })
+        this.$axios.post(PREFIX + '/admin/filter.do?' + params.toString(), {})
           .then((response) => {
             this.tableData = response.data.object.data
+            for (let i = 0 ;i<this.tableData.length;i++){
+              that.tableData[i].birthday =  new Date(that.tableData[i].birthday).toLocaleDateString();
+            }
             this.memberCount = response.data.object.recordSize
           })
           .catch((error) => {
@@ -339,14 +342,17 @@
       },
 
       handleSizeChange: function (size) {
+        let that = this;
         this.pagesize = size
         let params = new URLSearchParams()
         params.append('page', this.currentPage)
         params.append('size', this.pagesize)
-        this.$axios.post(PREFIX + '/admin/filter.do?' + params.toString(), {
-        })
+        this.$axios.post(PREFIX + '/admin/filter.do?' + params.toString(), {})
           .then((response) => {
             this.tableData = response.data.object.data
+            for (let i = 0 ;i<this.tableData.length;i++){
+              that.tableData[i].birthday =  new Date(that.tableData[i].birthday).toLocaleDateString();
+            }
             this.memberCount = response.data.object.recordSize
           })
           .catch((error) => {
@@ -356,19 +362,33 @@
 
       //根据条件查找成员信息(success)
       getFilterMemberInfo () {
+        let that =this;
+        let data = new Object
         var params = new URLSearchParams()
         params.append('page', this.currentPage)
         params.append('size', this.pagesize)
-
+        if (this.filterPhone != '') {
+          data.phone = this.filterPhone
+        }
+        if (this.filterName != '') {
+          data.name = this.filterName
+        }
+        if (this.filterSex != '') {
+          data.sex = this.filterSex
+        }
+        if (this.filterPhone != '') {
+          data.phone = this.filterPhone
+        }
+        if (this.filterAddress != '') {
+          data.address = this.filterAddress
+        }
         this.$axios.post(PREFIX + '/admin/filter.do?' + params.toString()
-          , {
-            phone: this.filterPhone,
-            name: this.filterName,
-            sex: this.filterSex,
-            address: this.filterAddress,
-          })
+          ,data)
           .then((response) => {
             this.tableData = response.data.object.data
+            for (let i = 0 ;i<this.tableData.length;i++){
+              that.tableData[i].birthday =  new Date(that.tableData[i].birthday).toLocaleDateString();
+            }
             this.memberCount = response.data.object.recordSize
           })
           .catch((error) => {

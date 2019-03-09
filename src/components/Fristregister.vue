@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  const PREFIX = 'http://localhost:8082/dinner';
+  const PREFIX = '/dinner';
   //验证是否能下一步
   let isnext = (that) => {
     for (var i = 0; i < 4; i++) {

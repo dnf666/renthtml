@@ -64,7 +64,7 @@
   }
 </style>
 <script>
-  const PREFIX = 'http://localhost:8082/dinner/';
+  const PREFIX = '/dinner/';
 export default {
    data() {
       return {
@@ -80,13 +80,14 @@ export default {
 
   methods: {
     returnManage(){
-      this.$router.push({ name: '/CuisineManagement'});
+      this.$router.push({ name: 'CuisineManagement'});
     },
     onChange(file){
-      this.file = file;
+      this.file = file.raw;
+      ;
     },
     putEditorCuisineInfo(){
-      let formData = new formData();
+      let formData = new FormData();
       formData.append("file",this.file);
       formData.append("name",this.name);
       formData.append("price",this.price);
@@ -95,7 +96,7 @@ export default {
           type: 'info',
           message:response.data.message
         });
-        this.$router.push({ name: 'BookManagement'});
+        this.$router.push({ name: 'CuisineManagement'});
       });
       }
   }

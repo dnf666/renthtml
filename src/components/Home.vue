@@ -12,18 +12,10 @@
         >
           <!-- 修改头像 -->
           <div class="content">
-              <img  src="/static/logo.png" class="avatar logo">
+              <img  src="/dinner/static/logo.png" class="avatar logo">
           </div>
           <!-- 列表 -->
           <el-tabs style="height: 200px;">
-            <router-link to="/CompanyInfo">
-              <el-menu-item index="/CompanyInfo">
-                <i class="el-icon-info"></i>
-                <span slot="title">
-                  财务管理
-                </span>
-              </el-menu-item>
-            </router-link>
             <router-link to="/MemberMangement">
               <el-menu-item index="/MemberMangement">
                 <i class="el-icon-edit"></i>

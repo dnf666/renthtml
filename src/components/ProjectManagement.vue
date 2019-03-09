@@ -1,6 +1,44 @@
 <template>
   <div>
     <router-view/>
+    <el-dialog title="订单详情" :visible.sync="dialogFormVisible" :append-to-body='true' top='100px' width="400px" center>
+      <el-table
+        id='out-table'
+        class="bookData"
+        ref="multipleTable"
+        :data="orderData"
+        tooltip-effect="dark"
+        :highlight-current-row="true"
+        style="width: 100%"
+      >
+        <el-table-column
+          prop="name"
+          align="center"
+          label="菜名"
+          width="100"
+          :show-overflow-tooltip="true">
+        </el-table-column>
+        <el-table-column
+          prop="price"
+          align="center"
+          label="价格(￥)"
+          width="100"
+          :show-overflow-tooltip="true">
+        </el-table-column>
+        <el-table-column
+          prop="num"
+          label="数量"
+          align="center"
+          width="100"
+          :show-overflow-tooltip="true">
+        </el-table-column>
+      </el-table>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">退出</el-button>
+      </div>
+    </el-dialog>
+
     <div class="top">订单管理</div>
     <div class="contentP">
       <el-button
@@ -224,7 +262,7 @@
   }
 </style>
 <script>
-  const PREFIX = 'http://localhost:8082/dinner/';
+  const PREFIX = '/dinner/';
   export default {
     data() {
       return {
@@ -238,6 +276,11 @@
           userId:'',
           date: '',
           price: '',
+        }],
+        orderData:[{
+          price:'',
+          num:'',
+          name:''
         }],
         dialogInfoVisible: false,
         dialogFormVisible: false,
@@ -270,14 +313,22 @@
     },
     methods: {
       findRow(orderId,userId){
+        let that = this;
         let params = new URLSearchParams();
         params.append('orderId', orderId);
         params.append('userId', userId);
-        this.$axios.get(PREFIX+'finance/finance.do?'+params.toString()).then((response)=>{
-          
+        this.$axios.get(PREFIX+'order/order.do?'+params.toString()).then((response)=>{
+                  if (response.data.status == 1){
+                    this.dialogFormVisible = true;
+                    that.orderData = response.data.object;
+
+                  }else {
+                    this.$message({
+                      type: 'warning',
+                      message: response.data.message
+                    });
+                  }
         })
-        console.log(orderId)
-        console.log(userId)
       },
       getFilterProjectInfo1(){
         this.sign = 1;
@@ -328,7 +379,6 @@
             alert(error);
           });
       },
-//删除选中行数据(success)
     }
   }
 </script>
