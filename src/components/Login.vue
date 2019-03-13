@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <el-card class="box-card">
-      <div class="main_title">欢迎来到DINNER</div>
+      <div class="main_title">欢迎来到HOUSE</div>
       <el-input
         class="input"
         placeholder="请输入电话"
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  const PREFIX = '/dinner'
+  const PREFIX = '/dinner/'
   export default {
     name: 'Login',
     data () {

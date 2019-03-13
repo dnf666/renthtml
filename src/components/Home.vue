@@ -16,6 +16,14 @@
           </div>
           <!-- 列表 -->
           <el-tabs style="height: 200px;">
+            <router-link to="/CostManagement">
+              <el-menu-item index="/CostManagement">
+                <i class="el-icon-bell"></i>
+                <span slot="title">
+                  支出管理
+                </span>
+              </el-menu-item>
+            </router-link>
             <router-link to="/MemberMangement">
               <el-menu-item index="/MemberMangement">
                 <i class="el-icon-edit"></i>

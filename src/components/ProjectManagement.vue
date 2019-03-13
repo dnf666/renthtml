@@ -60,7 +60,7 @@
       >本年
       </el-button>
       <span id='state'>
-        ({{projectCount}}个订单)
+        ({{projectCount}}元)
       </span>
       <div style="margin-top: 10px;">
       </div>
@@ -123,8 +123,8 @@
         :current-page="currentPage"
         :page-sizes="[5,7,10]"
         :page-size="pagesize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="projectCount">
+        layout="sizes, prev, pager, next, jumper"
+        >
       </el-pagination>
     </div>
   </div>
@@ -308,7 +308,7 @@
         for (let i = 0 ;i<this.tableData.length;i++){
           that.tableData[i].date =  new Date(that.tableData[i].date).toLocaleDateString();
         }
-        this.projectCount = res.data.object.recordSize;
+        this.projectCount = res.data.object.total;
       });
     },
     methods: {
@@ -353,7 +353,7 @@
           for (let i = 0 ;i<this.tableData.length;i++){
             that.tableData[i].date =  new Date(that.tableData[i].date).toLocaleDateString();
           }
-          this.projectCount = response.data.object.recordSize;
+          this.projectCount = response.data.object.total;
         }).catch((error) => {
           alert(error);
         });
@@ -373,7 +373,7 @@
           .then((response) => {
             console.log('展示第' + this.currentPage + '页项目信息成功');
             this.tableData = response.data.object.data;
-            this.projectCount = response.data.object.recordSize;
+            this.projectCount = response.data.object.total;
           })
           .catch((error) => {
             alert(error);

@@ -14,6 +14,7 @@ import Secondregister from '@/components/Secondregister'
 import EditorProject from '@/components/editorProject'
 import EditorBook from '@/components/CuisineEdit'
 import OrderDinner from '@/components/orderDinner'
+import CostManagement from '@/components/CostManagement'
 
 Vue.use(Router)
 
@@ -86,6 +87,14 @@ const routes = [
           requiresAuth: true
         },
         component: EditorBook
+      },
+      {
+        path: '/CostManagement',
+        name: 'CostManagement',
+        meta: {
+          requiresAuth: true
+        },
+        component: CostManagement
       },
       {
         path: '/MemberMangement/Editor',

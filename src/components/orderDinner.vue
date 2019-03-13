@@ -3,10 +3,10 @@
     <el-aside width="400px"></el-aside>
     <el-container>
       <el-container>
-        <el-header style="height:50px">
+        <el-header style="height: 70px">
           <div class="top">
             <div class="top1">
-              <div class="main_title1">DINNER</div>
+              <div class="main_title1">HOUSE</div>
             </div>
           </div>
         </el-header>
@@ -61,8 +61,6 @@
               :highlight-current-row="true"
               style="width: 100%"
             >
-              <!-- 图书状态编辑 -->
-              <!-- 成员信息 -->
               <el-table-column
                 prop="url"
                 label="图片"
@@ -302,8 +300,8 @@
       submit () {
         let that = this
         this.$confirm('要不再点点？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+          confirmButtonText: '残忍拒绝',
+          cancelButtonText: '再考虑下',
           type: 'warn',
         }).then(() => {
           this.dialogFormVisible = true;

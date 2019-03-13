@@ -13,7 +13,7 @@
         <el-date-picker
           v-model="date"
           type="date"
-          placeholder="选择日期">
+          placeholder="出生日期">
         </el-date-picker>
       </div>
       <el-input class="st" v-model="phone" v-on:input="changePhone" placeholder="你的电话"></el-input>
