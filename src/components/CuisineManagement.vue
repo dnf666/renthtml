@@ -320,6 +320,7 @@
         })
           .then((response) => {
             this.tableData = response.data.object.data;
+            this.bookCount = response.data.object.recordSize;
           })
           .catch((error) => {
             alert(error);
@@ -358,6 +359,7 @@
         })
           .then((response) => {
             this.tableData = response.data.object.data;
+            this.bookCount = response.data.object.recordSize;
           })
           .catch((error) => {
             alert(error);

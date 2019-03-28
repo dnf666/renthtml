@@ -54,7 +54,6 @@
 
   export default {
     name: 'Fristregister',
-    //todo 选项的值要改，但是后面是用接口传值的
 
     data() {
       return {

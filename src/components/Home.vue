@@ -62,7 +62,7 @@
       <el-main>
         <router-view />
       </el-main>
-      <el-footer>© 2018 重庆邮电大学经济管理学院信管工作室</el-footer>
+      <el-footer>©有家House Brunch </el-footer>
     </el-container>
   </el-container>
 </template>
