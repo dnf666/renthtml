@@ -2,14 +2,14 @@
   <div>
     <router-view/>
 
-    <div class="top">菜单管理</div>
+    <div class="top">房源管理</div>
     <div class="contentB">
       <el-dropdown split-button type="primary" class="moreMenu" @click="dialogFormVisible = true">
-        添加菜单
-        <el-dialog title="添加菜单" :visible.sync="dialogFormVisible" :append-to-body='true' top='100px' width="550px" center>
+        添加房源
+        <el-dialog title="添加房源" :visible.sync="dialogFormVisible" :append-to-body='true' top='100px' width="550px" center>
           <el-form>
-            <el-form-item label="菜名" :label-width="formLabelWidth">
-              <el-input class="increaseInput" placeholder="正确填写菜名" v-model="addName"></el-input>
+            <el-form-item label="位置" :label-width="formLabelWidth">
+              <el-input class="increaseInput" placeholder="正确填写位置" v-model="addName"></el-input>
             </el-form-item>
             <el-form-item label="图片" :label-width="formLabelWidth">
               <el-upload
@@ -23,9 +23,18 @@
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
               </el-upload>
             </el-form-item>
-            <el-form-item label="价格" :label-width="formLabelWidth">
+            <el-form-item label="联系人" :label-width="formLabelWidth">
+              <el-input class="increaseInput" placeholder="联系人" v-model="addOwner"></el-input>
+            </el-form-item>
+            <el-form-item label="联系方式" :label-width="formLabelWidth">
+              <el-input class="increaseInput" placeholder="正确填写联系方式" v-model="addPhone"></el-input>
+            </el-form-item>
+            <el-form-item label="补充说明" :label-width="formLabelWidth">
+              <el-input class="increaseInput" placeholder="几室几厅几卫" v-model="addOthers"></el-input>
+            </el-form-item>
+            <el-form-item label="月租" :label-width="formLabelWidth">
               <template>
-                <el-input-number v-model="addPrice" :precision="2" :step="0.1" :max="10000"></el-input-number>
+                <el-input-number v-model="addPrice" :precision="2" :step="0.1" :max="100000"></el-input-number>
               </template>
             </el-form-item>
           </el-form>
@@ -41,13 +50,13 @@
       >过滤
       </el-button>
       <span id='state'>
-        (共有 {{bookCount}} 道菜)
+        (共有 {{bookCount}} 个房源)
       </span>
       <div style="margin-top: 10px;">
         <el-collapse-transition>
           <div v-show="show3">
             <div class="transition-box">
-              <span>菜名：<el-input class="filter" v-model="filterName"></el-input></span>
+              <span>位置：<el-input class="filter" v-model="filterName"></el-input></span>
               <el-button class="primary" type="primary" @click="filterCuisine">过滤</el-button>
             </div>
           </div>
@@ -62,7 +71,6 @@
         tooltip-effect="dark"
         style="width: 100%"
         >
-        <!-- 图书状态编辑 -->
         <el-table-column
           width="50">
           <template slot-scope="scope">
@@ -73,13 +81,13 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>
                   <router-link :to="{ path:'/CuisineMangement/Editor',query: { bookOriginalInfo: scope.row} }">
-                    编辑菜谱
+                    编辑房源
                   </router-link>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <span
-                    @click="deleteCuisine(scope.row.name)">
-                  删除菜谱
+                    @click="deleteCuisine(scope.row.location)">
+                  删除房源
                   </span>
                 </el-dropdown-item>
               </el-dropdown-menu>
@@ -90,24 +98,36 @@
         <el-table-column
           prop="url"
           label="图片"
-          width="600"
+          width="300"
           :show-overflow-tooltip="true">
           <template slot-scope="scope">
             <img  :src="scope.row.url" alt="" style="width: 150px;height: 150px">
           </template>
         </el-table-column>
         <el-table-column
-          id="name"
-          prop="name"
-          label="菜名"
+          id="location"
+          prop="location"
+          label="位置"
           width="300"
           :show-overflow-tooltip="true">
-          <template slot-scope="scope">{{ scope.row.name }}</template>
+          <template slot-scope="scope">{{ scope.row.location }}</template>
+        </el-table-column>
+        <el-table-column
+          prop="roomOwner"
+          label="联系人"
+          width="200"
+          :show-overflow-tooltip="true">
+        </el-table-column>
+        <el-table-column
+          prop="phone"
+          label="联系方式"
+          width="200"
+          :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="price"
-          label="价格(￥)"
-          width="300"
+          label="月租(￥)"
+          width="100"
           :show-overflow-tooltip="true">
         </el-table-column>
       </el-table>
@@ -257,7 +277,7 @@
   }
 </style>
 <script>
-  const PREFIX = '/dinner/';
+  const PREFIX = 'http://localhost:8085/rent/';
   export default {
     data() {
       return {
@@ -269,9 +289,12 @@
         pagesize: 3,
         tableData: [
           {
-            name: '',
+            location: '',
             url: '',
             price: '',
+            phone:'',
+            others:'',
+            roomOwner:''
           }
         ],
         isDisabled: false,
@@ -293,6 +316,9 @@
         editFormVisible: false,
         addPrice:'',
         addName: '',
+        addPhone:'',
+        addOthers:'',
+        addOwner:'',
         filterName: '',
         file:''
 
@@ -330,8 +356,11 @@
         this.dialogFormVisible = false;
         let formData = new FormData();
         formData.append("file",this.file);
-        formData.append("name",this.addName);
+        formData.append("location",this.addName);
         formData.append("price",this.addPrice);
+        formData.append("others",this.addOthers);
+        formData.append("phone",this.addPhone);
+        formData.append("roomOwner",this.addOwner);
         this.$axios.post(PREFIX + 'cuisine/file.do', formData).then((res) => {
           console.log(res);
           if (res.data.status == 1) {
@@ -374,12 +403,9 @@
       beforeAvatarUpload(file) {
         this.file = file.raw;
       },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
-      },
       deleteCuisine(index) {
           let book = new Object;
-          book.name = index;
+          book.location = index;
           this.$axios.post(PREFIX + '/cuisine/delCuisine.do',book).then((response) => {
             if (response.data.status == 1) {
               this.$message({
@@ -388,7 +414,7 @@
               });
               for (let i = 0; i < this.tableData.length; i++) {
                 this.tableData.forEach((v, i) => {
-                  if (v.name === index) {
+                  if (v.location === index) {
                     this.tableData.splice(i, 1);
                   }
                 });
@@ -396,14 +422,13 @@
             }
             })
         },
-      //下载Excel模板(success)
       filterCuisine() {
         let params = new URLSearchParams();
         params.append('page', this.currentPage);
         params.append('size', this.pagesize);
         let book = new Object;
         if (this.filterName != '') {
-          book.name = this.filterName;
+          book.location = this.filterName;
         }
         this.$axios.post(PREFIX + 'cuisine/filter.do?'+params.toString(),book)
           .then((response) => {

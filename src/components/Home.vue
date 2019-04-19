@@ -20,7 +20,7 @@
               <el-menu-item index="/CostManagement">
                 <i class="el-icon-bell"></i>
                 <span slot="title">
-                  支出管理
+                  备忘管理
                 </span>
               </el-menu-item>
             </router-link>
@@ -36,7 +36,7 @@
               <el-menu-item index="/ProjectManagement">
                 <i class="el-icon-menu"></i>
                 <span slot="title">
-                  订单管理
+                  租金管理
                 </span>
               </el-menu-item>
             </router-link>
@@ -44,7 +44,7 @@
                   <el-menu-item index="/CuisineManagement">
                     <template slot="title">
                       <i class="el-icon-goods"></i>
-                      菜谱管理
+                      房源管理
                     </template>
                   </el-menu-item>
                 </router-link>

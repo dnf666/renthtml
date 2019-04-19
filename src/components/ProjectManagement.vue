@@ -262,7 +262,7 @@
   }
 </style>
 <script>
-  const PREFIX = '/dinner/';
+  const PREFIX = 'http://localhost:8085/rent/';
   export default {
     data() {
       return {

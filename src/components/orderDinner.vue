@@ -266,7 +266,7 @@
 </style>
 <script>
   var COMPANYID = window.sessionStorage.getItem('companyId')
-  const PREFIX = '/dinner'
+  const PREFIX = 'http://localhost:8085/rent/';
   export default {
     name: 'OrderDinner',
     data () {
