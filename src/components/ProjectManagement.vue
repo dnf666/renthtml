@@ -39,7 +39,7 @@
       </div>
     </el-dialog>
 
-    <div class="top">订单管理</div>
+    <div class="top">预约管理</div>
     <div class="contentP">
       <el-button
         class="filterDown"
@@ -72,45 +72,22 @@
         tooltip-effect="dark"
         style="width: 100%"
         >
+
         <el-table-column
-          width="50">
-          <template slot-scope="scope">
-            <el-dropdown>
-              <span class="el-dropdown-link">
-                <i class="editor el-icon-caret-bottom"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>
-                  <span
-                    @click="findRow(scope.row.orderId,scope.row.userId)">
-                  查看详情
-                  </span>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="orderId"
-          label="订单编号"
+          prop="location"
+          label="位置"
           width="150"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="name"
-          label="订单人"
+          label="预约人"
           width="350"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="date"
           label="日期"
-          width="350"
-          :show-overflow-tooltip="true">
-        </el-table-column>
-        <el-table-column
-          prop="price"
-          label="金额"
           width="350"
           :show-overflow-tooltip="true">
         </el-table-column>
@@ -271,11 +248,10 @@
         currentPage: 1,
         pagesize: 10,
         tableData: [{
-          orderId: '',
+          id: '',
           name: '',
-          userId:'',
           date: '',
-          price: '',
+          location: '',
         }],
         orderData:[{
           price:'',
@@ -308,28 +284,10 @@
         for (let i = 0 ;i<this.tableData.length;i++){
           that.tableData[i].date =  new Date(that.tableData[i].date).toLocaleDateString();
         }
-        this.projectCount = res.data.object.total;
+        this.projectCount = res.data.object.recordSize;
       });
     },
     methods: {
-      findRow(orderId,userId){
-        let that = this;
-        let params = new URLSearchParams();
-        params.append('orderId', orderId);
-        params.append('userId', userId);
-        this.$axios.get(PREFIX+'order/order.do?'+params.toString()).then((response)=>{
-                  if (response.data.status == 1){
-                    this.dialogFormVisible = true;
-                    that.orderData = response.data.object;
-
-                  }else {
-                    this.$message({
-                      type: 'warning',
-                      message: response.data.message
-                    });
-                  }
-        })
-      },
       getFilterProjectInfo1(){
         this.sign = 1;
         this.getFilterProjectInfo();
@@ -353,7 +311,7 @@
           for (let i = 0 ;i<this.tableData.length;i++){
             that.tableData[i].date =  new Date(that.tableData[i].date).toLocaleDateString();
           }
-          this.projectCount = response.data.object.total;
+          this.projectCount = response.data.object.recordSize;
         }).catch((error) => {
           alert(error);
         });
@@ -373,7 +331,7 @@
           .then((response) => {
             console.log('展示第' + this.currentPage + '页项目信息成功');
             this.tableData = response.data.object.data;
-            this.projectCount = response.data.object.total;
+            this.projectCount = response.data.object.recordSize;
           })
           .catch((error) => {
             alert(error);

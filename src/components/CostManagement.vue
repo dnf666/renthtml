@@ -1,11 +1,11 @@
 <template>
   <div>
     <router-view/>
-    <div class="cost_top">提醒管理</div>
+    <div class="cost_top">备忘管理</div>
     <div class="contentm">
       <el-dropdown split-button type="primary" class="moreMenu" @click="dialogFormVisible = true">
-        添加提醒
-        <el-dialog title="添加提醒" :visible.sync="dialogFormVisible" :append-to-body='true' top='10px' width="550px">
+        添加备忘
+        <el-dialog title="添加备忘" :visible.sync="dialogFormVisible" :append-to-body='true' top='10px' width="550px">
           <el-form class="memberData">
             <el-form-item label="说明" :label-width="formLabelWidth">
               <el-input class="increaseInput" v-model="newDescribe" placeholder="支出说明"></el-input>
@@ -79,13 +79,13 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>
                   <router-link :to="{ path:'/MemberMangement/Editor',query: { memberOriginalInfo: scope.row} }">
-                    编辑提醒
+                    编辑备忘
                   </router-link>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <span
                     @click="deleteMember(scope.row.id)">
-                  删除提醒
+                  删除备忘
                   </span>
                 </el-dropdown-item>
               </el-dropdown-menu>

@@ -4,11 +4,11 @@
       <span>当前位置：</span>
       <el-breadcrumb class="breadcrumbEditor" separator=">">
         <el-breadcrumb-item>系统设置</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/CostManagement' }">支出管理</el-breadcrumb-item>
-        <el-breadcrumb-item>编辑支出</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/CostManagement' }">备忘管理</el-breadcrumb-item>
+        <el-breadcrumb-item>编辑备忘</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div id="editorTitle">编辑支出</div>
+    <div id="editorTitle">编辑备忘</div>
     <el-tabs v-model="activeName" class="tabsEditor" type="card">
       <el-tab-pane label="基本信息" name="first">
         <el-form>

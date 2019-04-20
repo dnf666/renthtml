@@ -25,22 +25,36 @@
                 style="width: 100%"
               >
                 <el-table-column
-                  prop="name"
+                  prop="location"
                   align="center"
-                  label="菜名"
+                  label="位置"
+                  width="100"
+                  :show-overflow-tooltip="true">
+                </el-table-column>
+                <el-table-column
+                  prop="roomOwner"
+                  align="center"
+                  label="联系人"
+                  width="100"
+                  :show-overflow-tooltip="true">
+                </el-table-column>
+                <el-table-column
+                  prop="phone"
+                  label="电话"
+                  align="center"
+                  width="100"
+                  :show-overflow-tooltip="true">
+                </el-table-column>
+                <el-table-column
+                  prop="others"
+                  label="规格"
+                  align="center"
                   width="100"
                   :show-overflow-tooltip="true">
                 </el-table-column>
                 <el-table-column
                   prop="price"
-                  align="center"
-                  label="价格(￥)"
-                  width="100"
-                  :show-overflow-tooltip="true">
-                </el-table-column>
-                <el-table-column
-                  prop="num"
-                  label="数量"
+                  label="月租"
                   align="center"
                   width="100"
                   :show-overflow-tooltip="true">
@@ -61,6 +75,19 @@
               :highlight-current-row="true"
               style="width: 100%"
             >
+              <el-table-column type="expand">
+                <template slot-scope="scope">
+                  <el-form label-position="left" inline class="demo-table-expand">
+                    <el-form-item label="联系人">
+                      <span>{{scope.row.roomOwner}}</span>
+                    </el-form-item>
+                    <el-form-item label="联系方式">
+                      <span>{{ scope.row.phone}}</span>
+                    </el-form-item>
+                  </el-form>
+                  <el-button type="success" round @click="submit(scope.row)">预约</el-button>
+                </template>
+              </el-table-column>
               <el-table-column
                 prop="url"
                 label="图片"
@@ -72,40 +99,36 @@
                 </template>
               </el-table-column>
               <el-table-column
-                id="name"
-                prop="name"
+                id="location"
+                prop="location"
                 align="center"
-                label="菜名"
-                width="250"
+                label="位置"
+                width="300"
                 :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                   <div slot="reference" class="name-wrapper">
-                    <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                    <el-tag size="medium">{{ scope.row.location }}</el-tag>
                   </div>
                 </template>
               </el-table-column>
               <el-table-column
-                prop="price"
+                prop="others"
                 align="center"
-                label="价格(￥)"
+                label="补充说明"
                 width="150"
                 :show-overflow-tooltip="true">
               </el-table-column>
               <el-table-column
-                prop="num"
-                label="数量"
+                prop="price"
+                label="月租"
                 align="center"
-                width="400"
+                width="100"
                 :show-overflow-tooltip="true">
-                <template slot-scope="scope">
-                  <el-input-number v-model="scope.row.num" :min="0" :max="10" label="1"></el-input-number>
-                </template>
               </el-table-column>
             </el-table>
           </div>
         </el-main>
         <el-footer>
-          <el-button type="success" round @click="submit">提交</el-button>
         </el-footer>
       </el-container>
     </el-container>
@@ -274,65 +297,45 @@
         input10: '',
         show3: false,
         dialogFormVisible: false,
-        orderData: [{
-          name: '',
-          price: '',
-          num: ''
-        }],
         tableData: [
           {
-            name: '',
+            location: '',
             url: '',
+            phone: '',
+            others: '',
+            name: '',
             price: '',
-            num: '0'
           }
         ],
-        totalPrice:'',
       }
     },
     created: function () {
       this.$axios.get(PREFIX + '/cuisine/filter.do', {}).then((response) => {
         this.tableData = response.data.object.data
-        this.total = response.data.object.recordSize
       })
     },
     methods: {
-      submit () {
+      submit (val) {
         let that = this
-        this.$confirm('要不再点点？', '提示', {
-          confirmButtonText: '残忍拒绝',
-          cancelButtonText: '再考虑下',
+        this.$confirm('确定预约吗', '提示', {
+          confirmButtonText: '再考虑下',
+          cancelButtonText: '确定',
           type: 'warn',
         }).then(() => {
-          this.dialogFormVisible = true;
-          let j = 0;
-          let totalPrice = 0;
-          for (let i = 0;i<that.tableData.length;i++)
-          {
-            if (that.tableData[i].num != 0){
-              that.orderData[j] = that.tableData[i];
-              j++;
-              totalPrice = totalPrice + that.tableData[i].num*that.tableData[i].price;
+          let data = val;
+          this.$axios.post(PREFIX + '/order/submit.do?phone=' + COMPANYID, data).then((response) => {
+            if (response.data.status == 1) {
+              this.$message({
+                type: 'success',
+                message: response.data.message
+              })
+            } else {
+              this.$message({
+                type: 'warning',
+                message: response.data.message
+              })
             }
-          }
-          that.totalPrice = totalPrice;
-        })
-      },
-      buy () {
-        this.dialogFormVisible = false;
-        let data = this.tableData
-        this.$axios.post(PREFIX + '/order/submit.do?phone=' + COMPANYID, data).then((response) => {
-          if (response.data.status == 1) {
-            this.$message({
-              type: 'success',
-              message: response.data.message
-            })
-          } else {
-            this.$message({
-              type: 'warning',
-              message: response.data.message
-            })
-          }
+          })
         })
       }
     }
