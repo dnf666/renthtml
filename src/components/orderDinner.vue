@@ -278,7 +278,7 @@
     box-sizing: border-box;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    background-image: url(/dinner/static/lala.jpg);
+    background-image: url(/rent/static/lala.jpg);
     background-repeat: initial;
   }
 
