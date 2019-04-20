@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <el-card class="box-card">
-      <div class="main_title">有家</div>
+      <div class="main_title">welcome to 有家</div>
       <el-input
         class="input"
         placeholder="请输入电话"

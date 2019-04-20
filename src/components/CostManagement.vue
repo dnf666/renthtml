@@ -3,7 +3,7 @@
     <router-view/>
     <div class="cost_top">备忘管理</div>
     <div class="contentm">
-      <el-dropdown split-button type="primary" class="moreMenu" @click="dialogFormVisible = true">
+      <el-button split-button type="primary" class="moreMenu" @click="dialogFormVisible = true">
         添加备忘
         <el-dialog title="添加备忘" :visible.sync="dialogFormVisible" :append-to-body='true' top='10px' width="550px">
           <el-form class="memberData">
@@ -26,7 +26,7 @@
             <el-button type="primary" @click="addMember">保存</el-button>
           </div>
         </el-dialog>
-      </el-dropdown>
+      </el-button>
       <el-button
         class="filterDown"
         type="primary" plain
@@ -321,7 +321,7 @@
 <script>
   import FileSaver from 'file-saver'
   import XLSX from 'xlsx'
-  const PREFIX = 'http://localhost:8085/rent/';'/rent/'
+  const PREFIX = 'http://localhost:8085/rent/';
   export default {
     data () {
       return {
@@ -402,13 +402,11 @@
                 message: '已取消删除'
               })
             }
-          }
-        )
+          })
           .catch((error) => {
             alert(error)
           })
       },
-      //删除选中行数据(success)
       addMember () {
         this.dialogFormVisible = false
         this.$axios.post(PREFIX + '/cost/cost.do', {

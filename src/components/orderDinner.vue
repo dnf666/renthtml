@@ -122,7 +122,6 @@
                 prop="price"
                 label="月租"
                 align="center"
-                width="100"
                 :show-overflow-tooltip="true">
               </el-table-column>
             </el-table>
@@ -318,8 +317,8 @@
       submit (val) {
         let that = this
         this.$confirm('确定预约吗', '提示', {
-          confirmButtonText: '再考虑下',
-          cancelButtonText: '确定',
+          confirmButtonText: '确定',
+          cancelButtonText: '再考虑下',
           type: 'warn',
         }).then(() => {
           let data = val;

@@ -4,7 +4,7 @@
 
     <div class="top">房源管理</div>
     <div class="contentB">
-      <el-dropdown split-button type="primary" class="moreMenu" @click="dialogFormVisible = true">
+      <el-button split-button type="primary" class="moreMenu" @click="dialogFormVisible = true">
         添加房源
         <el-dialog title="添加房源" :visible.sync="dialogFormVisible" :append-to-body='true' top='100px' width="550px" center>
           <el-form>
@@ -43,15 +43,12 @@
             <el-button type="primary" @click="addDataSave">保存</el-button>
           </div>
         </el-dialog>
-      </el-dropdown>
+      </el-button>
       <el-button
         class="filterDown"
         @click="show3 = !show3"
       >过滤
       </el-button>
-      <span id='state'>
-        (共有 {{bookCount}} 个房源)
-      </span>
       <div style="margin-top: 10px;">
         <el-collapse-transition>
           <div v-show="show3">
@@ -64,6 +61,7 @@
       </div>
       <hr>
       <el-table
+        v-loading="loading"
         id='out-table'
         class="bookData"
         ref="multipleTable"
@@ -98,6 +96,7 @@
         <el-table-column
           prop="url"
           label="图片"
+          align="center"
           width="300"
           :show-overflow-tooltip="true">
           <template slot-scope="scope">
@@ -108,6 +107,7 @@
           id="location"
           prop="location"
           label="位置"
+          align="center"
           width="300"
           :show-overflow-tooltip="true">
           <template slot-scope="scope">{{ scope.row.location }}</template>
@@ -116,18 +116,20 @@
           prop="roomOwner"
           label="联系人"
           width="200"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="phone"
           label="联系方式"
+          align="center"
           width="200"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="price"
           label="月租(￥)"
-          width="100"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
       </el-table>
@@ -320,11 +322,12 @@
         addOthers:'',
         addOwner:'',
         filterName: '',
-        file:''
-
+        file:'',
+        loading:''
       }
     },
     created: function () {
+      this.loading = true;
       let params = new URLSearchParams();
       params.append('page', this.currentPage);
       params.append('size', this.pagesize);
@@ -332,6 +335,7 @@
       }).then((res) => {
         this.tableData = res.data.object.data;
         this.bookCount = res.data.object.recordSize;
+        this.loading = false;
       }).catch(function (error) {
 
       })

@@ -12,7 +12,7 @@
         >
           <!-- 修改头像 -->
           <div class="content">
-              <img  src="/dinner/static/logo.png" class="avatar logo">
+              <img  src="/rent/static/logo.png" class="avatar logo">
           </div>
           <!-- 列表 -->
           <el-tabs style="height: 200px;">
@@ -36,7 +36,7 @@
               <el-menu-item index="/ProjectManagement">
                 <i class="el-icon-menu"></i>
                 <span slot="title">
-                  租金管理
+                  预约管理
                 </span>
               </el-menu-item>
             </router-link>

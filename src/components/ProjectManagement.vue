@@ -1,44 +1,6 @@
 <template>
   <div>
     <router-view/>
-    <el-dialog title="订单详情" :visible.sync="dialogFormVisible" :append-to-body='true' top='100px' width="400px" center>
-      <el-table
-        id='out-table'
-        class="bookData"
-        ref="multipleTable"
-        :data="orderData"
-        tooltip-effect="dark"
-        :highlight-current-row="true"
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="name"
-          align="center"
-          label="菜名"
-          width="100"
-          :show-overflow-tooltip="true">
-        </el-table-column>
-        <el-table-column
-          prop="price"
-          align="center"
-          label="价格(￥)"
-          width="100"
-          :show-overflow-tooltip="true">
-        </el-table-column>
-        <el-table-column
-          prop="num"
-          label="数量"
-          align="center"
-          width="100"
-          :show-overflow-tooltip="true">
-        </el-table-column>
-      </el-table>
-
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">退出</el-button>
-      </div>
-    </el-dialog>
-
     <div class="top">预约管理</div>
     <div class="contentP">
       <el-button
@@ -60,7 +22,7 @@
       >本年
       </el-button>
       <span id='state'>
-        ({{projectCount}}元)
+        ({{projectCount}}个房源)
       </span>
       <div style="margin-top: 10px;">
       </div>
@@ -76,19 +38,29 @@
         <el-table-column
           prop="location"
           label="位置"
-          width="150"
+          align="center"
+          width="300"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="name"
           label="预约人"
-          width="350"
+          width="250"
+          align="center"
+          :show-overflow-tooltip="true">
+        </el-table-column>
+        <el-table-column
+          prop="phone"
+          label="联系方式"
+          width="300"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="date"
           label="日期"
           width="350"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
       </el-table>

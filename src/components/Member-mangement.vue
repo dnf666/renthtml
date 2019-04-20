@@ -48,6 +48,7 @@
           id="phone"
           label="电话"
           width="200"
+          align="center"
           :show-overflow-tooltip="true">
           <template slot-scope="scope">{{ scope.row.phone}}</template>
         </el-table-column>
@@ -55,29 +56,34 @@
           prop="name"
           label="姓名"
           width="200"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="sex"
           label="性别"
           width="200"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="birthday"
           label="出生日期"
           width="200"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="address"
           label="地址"
+          align="center"
           width="200">
         </el-table-column>
         <el-table-column
           prop="password"
           label="密码"
           width="200"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
       </el-table>
