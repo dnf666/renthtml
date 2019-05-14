@@ -98,6 +98,7 @@
           id="id"
           label="编号"
           width="300"
+          align="center"
           :show-overflow-tooltip="true">
           <template slot-scope="scope">{{ scope.row.id }}</template>
         </el-table-column>
@@ -105,18 +106,20 @@
           prop="name"
           label="说明"
           width="400"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="date"
           label="日期"
           width="300"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="price"
           label="费用(￥)"
-          width="200"
+          align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
       </el-table>

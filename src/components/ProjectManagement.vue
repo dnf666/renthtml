@@ -22,7 +22,7 @@
       >本年
       </el-button>
       <span id='state'>
-        ({{projectCount}}个房源)
+        ({{projectCount}}个预约)
       </span>
       <div style="margin-top: 10px;">
       </div>
@@ -59,7 +59,6 @@
         <el-table-column
           prop="date"
           label="日期"
-          width="350"
           align="center"
           :show-overflow-tooltip="true">
         </el-table-column>

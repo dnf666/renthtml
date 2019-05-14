@@ -1,6 +1,8 @@
 <template>
   <el-container>
-    <el-aside width="400px"></el-aside>
+    <el-aside width="400px">
+      <el-button type="primary" icon="el-icon-info" @click="message" circle></el-button>
+    </el-aside>
     <el-container>
       <el-container>
         <el-header style="height: 70px">
@@ -14,58 +16,27 @@
         <el-main>
           <div class="contentB">
             <hr>
-            <el-dialog title="订单详情" :visible.sync="dialogFormVisible" :append-to-body='true' top='100px' width="400px" center>
-              <el-table
-                id='out-table1'
-                class="bookData"
-                ref="multipleTable"
-                :data="orderData"
-                tooltip-effect="dark"
-                :highlight-current-row="true"
-                style="width: 100%"
-              >
-                <el-table-column
-                  prop="location"
-                  align="center"
-                  label="位置"
-                  width="100"
-                  :show-overflow-tooltip="true">
-                </el-table-column>
-                <el-table-column
-                  prop="roomOwner"
-                  align="center"
-                  label="联系人"
-                  width="100"
-                  :show-overflow-tooltip="true">
-                </el-table-column>
-                <el-table-column
-                  prop="phone"
-                  label="电话"
-                  align="center"
-                  width="100"
-                  :show-overflow-tooltip="true">
-                </el-table-column>
-                <el-table-column
-                  prop="others"
-                  label="规格"
-                  align="center"
-                  width="100"
-                  :show-overflow-tooltip="true">
-                </el-table-column>
-                <el-table-column
-                  prop="price"
-                  label="月租"
-                  align="center"
-                  width="100"
-                  :show-overflow-tooltip="true">
-                </el-table-column>
-              </el-table>
-
+            <el-dialog title="用户详情" :visible.sync="dialogFormVisible" :append-to-body='true' top='100px' width="250px" center>
+                <template>
+                  <el-form label-position="left" inline class="demo-table-expand">
+                    <el-form-item label="姓名">
+                      <span>{{ userData.name}}</span>
+                    </el-form-item><br>
+                    <el-form-item label="性别">
+                      <span>{{ userData.sex }}</span>
+                    </el-form-item><br>
+                    <el-form-item label="电话">
+                      <span>{{userData.phone }}</span>
+                    </el-form-item><br>
+                    <el-form-item label="住址">
+                      <span>{{ userData.address }}</span>
+                    </el-form-item>
+                  </el-form>
+                </template>
               <div slot="footer" class="dialog-footer">
-                <el-button @click="buy">支付{{totalPrice}}元</el-button>
+                <el-button @click="dialogFormVisible = false">退出</el-button>
               </div>
             </el-dialog>
-
             <el-table
               id='out-table'
               class="bookData"
@@ -306,6 +277,7 @@
             price: '',
           }
         ],
+        userData:'',
       }
     },
     created: function () {
@@ -314,6 +286,19 @@
       })
     },
     methods: {
+      message(){
+        this.$axios.get(PREFIX+'/login/login.do?phone='+COMPANYID).then((res)=>{
+          if (res.data.status == 1) {
+            this.userData = res.data.object;
+            this.dialogFormVisible = true;
+          }else {
+            this.$message({
+              type: 'warning',
+              message: response.data.message
+            })
+          }
+        })
+      },
       submit (val) {
         let that = this
         this.$confirm('确定预约吗', '提示', {

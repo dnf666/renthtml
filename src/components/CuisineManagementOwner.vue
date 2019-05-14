@@ -70,7 +70,7 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
-        >
+      >
         <el-table-column
           width="50">
           <template slot-scope="scope">
@@ -282,6 +282,7 @@
 </style>
 <script>
   const PREFIX = 'http://localhost:8085/rent/';
+  const COMPANYID = window.sessionStorage.getItem("companyId");
   export default {
     data() {
       return {
@@ -331,18 +332,11 @@
       }
     },
     created: function () {
-      this.loading = true;
-      let params = new URLSearchParams();
-      params.append('page', this.currentPage);
-      params.append('size', this.pagesize);
-      this.$axios.post(PREFIX + 'cuisine/filter.do?' + params.toString(), {
-      }).then((res) => {
-        this.tableData = res.data.object.data;
-        this.bookCount = res.data.object.recordSize;
-        this.loading = false;
-      }).catch(function (error) {
-
-      })
+      if (COMPANYID == 'null'){
+        window.location.reload();
+      } else {
+        this.filterCuisine();
+      }
     },
     methods: {
       handleCurrentChange(currentPage) {
@@ -376,13 +370,12 @@
         formData.append("phone",this.addPhone);
         formData.append("roomOwner",this.addOwner);
         this.$axios.post(PREFIX + 'cuisine/file.do', formData).then((res) => {
-          console.log(res);
           if (res.data.status == 1) {
             this.$message({
               type: 'success',
               message: '添加成功!'
             });
-          window.location.reload();
+            window.location.reload();
           } else {
             this.$message({
               type: 'warn',
@@ -418,33 +411,34 @@
         this.file = file.raw;
       },
       deleteCuisine(index) {
-          let book = new Object;
-          book.location = index;
-          this.$axios.post(PREFIX + '/cuisine/delCuisine.do',book).then((response) => {
-            if (response.data.status == 1) {
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
+        let book = new Object;
+        book.location = index;
+        this.$axios.post(PREFIX + '/cuisine/delCuisine.do',book).then((response) => {
+          if (response.data.status == 1) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            for (let i = 0; i < this.tableData.length; i++) {
+              this.tableData.forEach((v, i) => {
+                if (v.location === index) {
+                  this.tableData.splice(i, 1);
+                }
               });
-              for (let i = 0; i < this.tableData.length; i++) {
-                this.tableData.forEach((v, i) => {
-                  if (v.location === index) {
-                    this.tableData.splice(i, 1);
-                  }
-                });
-              }
             }
-            })
-        },
+          }
+        })
+      },
       filterCuisine() {
+        this.loading = true;
         let params = new URLSearchParams();
         params.append('page', this.currentPage);
         params.append('size', this.pagesize);
-        console.log(this.before);
         let book = new Object;
         if (this.filterName != '') {
           book.location = this.filterName;
         }
+        book.phone = COMPANYID;
         if (this.before != '') {
           params.append('before',this.before);
         }
@@ -453,9 +447,10 @@
         }
         this.$axios.post(PREFIX + 'cuisine/filter.do?'+params.toString(),book)
           .then((response) => {
-          this.tableData = response.data.object.data;
-          this.bookCount = response.data.object.recordSize;
-        })
+            this.tableData = response.data.object.data;
+            this.bookCount = response.data.object.recordSize;
+            this.loading = false;
+          })
       }
     }
   }

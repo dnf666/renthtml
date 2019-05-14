@@ -10,11 +10,6 @@
       >过滤
       </el-button>
 
-      <!-- 成员状态 -->
-      <span id='state'>
-        ({{memberCount}} 成员)
-      </span>
-      <!-- 根据输入过滤信息 -->
       <div style="margin-top: 10px;">
         <el-collapse-transition>
           <div v-show="show3">
@@ -42,6 +37,30 @@
         tooltip-effect="dark"
         style="width: 100%"
       >
+        <el-table-column
+          width="50">
+          <template slot-scope="scope">
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                <i class="editor el-icon-caret-bottom"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+<!--                <el-dropdown-item>-->
+<!--                  <router-link :to="{ path:'/CuisineMangement/Editor',query: { bookOriginalInfo: scope.row} }">-->
+<!--                    编辑房源-->
+<!--                  </router-link>-->
+<!--                </el-dropdown-item>-->
+                <el-dropdown-item>
+                  <span
+                    @click="deleteMember(scope.row.phone)">
+                  删除用户
+                  </span>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </template>
+        </el-table-column>
+
         <!-- 成员信息 -->
         <el-table-column
           class="memberInfo"
@@ -55,7 +74,7 @@
         <el-table-column
           prop="name"
           label="姓名"
-          width="200"
+          width="100"
           align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
@@ -77,12 +96,11 @@
           prop="address"
           label="地址"
           align="center"
-          width="200">
+          width="300">
         </el-table-column>
         <el-table-column
           prop="password"
           label="密码"
-          width="200"
           align="center"
           :show-overflow-tooltip="true">
         </el-table-column>
@@ -364,6 +382,25 @@
           .catch((error) => {
             alert(error)
           })
+      },
+      deleteMember(index) {
+        let book = new Object;
+        book.phone = index;
+        this.$axios.post(PREFIX + '/login/delMember.do',book).then((response) => {
+          if (response.data.status == 1) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            for (let i = 0; i < this.tableData.length; i++) {
+              this.tableData.forEach((v, i) => {
+                if (v.phone === index) {
+                  this.tableData.splice(i, 1);
+                }
+              });
+            }
+          }
+        })
       },
 
       //根据条件查找成员信息(success)

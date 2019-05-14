@@ -15,7 +15,8 @@ import EditorProject from '@/components/editorProject'
 import EditorBook from '@/components/CuisineEdit'
 import OrderDinner from '@/components/orderDinner'
 import CostManagement from '@/components/CostManagement'
-
+import RoomOwner from '@/components/RoomOwner'
+import CuisineManagementOwner from '@/components/CuisineManagementOwner'
 Vue.use(Router)
 
 const routes = [
@@ -58,6 +59,24 @@ const routes = [
     },
     component: OrderDinner
   },
+  {
+    path: '/RoomOwner',
+    name: 'RoomOwner',
+    redirect:'/CuisineManagementOwner',
+    component: RoomOwner,
+    children:[
+      {
+        path: '/CuisineManagementOwner',
+        name: 'CuisineManagementOwner',
+        meta: {
+          requiresAuth: true
+        },
+        component: CuisineManagementOwner
+      },
+    ]
+  },
+
+
   {
     path: '/Home',
     name: 'Home',

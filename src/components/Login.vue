@@ -21,6 +21,7 @@
       >
       </el-input>
       <el-radio v-model="radio" label="2">会员</el-radio>
+      <el-radio v-model="radio" label="3">房东</el-radio>
       <el-radio v-model="radio" label="1">管理员</el-radio>
       <el-button class="loginbutton" type="primary" @click="onSubmit">登录</el-button>
       <div class="footer">还没有账号？
@@ -44,7 +45,8 @@
     methods: {
       onSubmit () {
         let that = this
-        if (this.radio == 2) {
+       //roomowner and user
+        if (this.radio == 2 || this.radio == 3) {
           //提交请求
           this.$axios.post(PREFIX + '/login/login.do', {
             phone: this.email,
@@ -56,7 +58,11 @@
                 that.$store.commit('setCompanyId', response.data.object.phone)
                 window.sessionStorage.setItem('isLogin', true)
                 window.sessionStorage.setItem('companyId', response.data.object.phone)
-                that.$router.push({path: '/OrderDinner'})
+                if (this.radio == 2) {
+                  that.$router.push({path: '/OrderDinner'})
+                }else{
+                  that.$router.push({path:'/RoomOwner'});
+                }
               } else {
                 alert(response.data.message)
               }
