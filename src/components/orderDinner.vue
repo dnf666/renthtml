@@ -52,9 +52,6 @@
                     <el-form-item label="联系人">
                       <span>{{scope.row.roomOwner}}</span>
                     </el-form-item>
-                    <el-form-item label="联系方式">
-                      <span>{{ scope.row.phone}}</span>
-                    </el-form-item>
                   </el-form>
                   <el-button type="success" round @click="submit(scope.row)">预约</el-button>
                 </template>

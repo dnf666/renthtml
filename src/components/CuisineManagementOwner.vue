@@ -332,7 +332,7 @@
       }
     },
     created: function () {
-      if (COMPANYID == 'null'){
+      if (COMPANYID == null){
         window.location.reload();
       } else {
         this.filterCuisine();
